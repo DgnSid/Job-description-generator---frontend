@@ -710,9 +710,9 @@ textarea {
         <header class="header">
             <div class="logo">
                 <i class="fas fa-file-contract"></i>
-                <h1>Générateur de Fiches de Poste</h1>
+                <h1>NYOTA FICHE DE POSTE</h1>
             </div>
-            <p class="subtitle">Créez des fiches de poste professionnelles prêtes à publier en quelques minutes</p>
+            <p class="subtitle">Le générateur de fiche de poste de NYOTA</p>
         </header>
 
         <!-- Formulaire -->
@@ -983,11 +983,26 @@ ficheForm.addEventListener('submit', async (e) => {
             throw new Error('Réponse invalide du serveur');
         }
 
-        // Déclencher le téléchargement via une navigation (le navigateur gère l'attachment)
-        window.location.href = `${API_BASE_URL}${json.downloadUrl}`;
+        // Déclencher le téléchargement de façon robuste (mobile + desktop compatible)
+        const fullUrl = `${API_BASE_URL}${json.downloadUrl}`;
+        const link = document.createElement('a');
+        link.href = fullUrl;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.download = true;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-        // Rechargement léger pour vider le formulaire (après le démarrage du téléchargement)
-        setTimeout(() => window.location.reload(), 800);
+        // Message adapté selon le navigateur mobile ou desktop
+        const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+        const message = isMobile
+            ? '📥 Fichier ouvert. Sur iPhone : Partager → Enregistrer dans Fichiers.'
+            : '📥 Fichier Word téléchargé.';
+        showNotification(message, 'success');
+
+        // Recharger la page pour vider le formulaire (après le démarrage du téléchargement)
+        setTimeout(() => window.location.reload(), 1200);
         
     } catch (error) {
         console.error('Erreur:', error);
