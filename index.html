@@ -860,12 +860,12 @@ textarea {
                     </div>
 
                     <div class="action-buttons">
-                        <a href="#" class="btn btn-download" id="downloadLink">
+                        <a href="#" class="btn btn-download" id="downloadLink" target="_blank" rel="noopener">
                             <i class="fas fa-download"></i> Télécharger le fichier Word
                         </a>
-                        <button class="btn btn-secondary" id="btnCopyText">
-                            <i class="fas fa-copy"></i> Copier le texte
-                        </button>
+                        <p style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem; text-align: center;">
+                            📱 <em>Sur iPhone : le fichier s'ouvre → Partager → Enregistrer dans Fichiers</em>
+                        </p>
                         <button class="btn btn-outline" id="btnNewFiche">
                             <i class="fas fa-plus"></i> Créer une nouvelle fiche
                         </button>
@@ -941,6 +941,7 @@ const fileSize = document.getElementById('fileSize');
 
 // Variables globales
 let generatedFicheData = null;
+let downloadUrl = null;
 
 // (Aperçu rapide supprimé)
 
@@ -983,26 +984,17 @@ ficheForm.addEventListener('submit', async (e) => {
             throw new Error('Réponse invalide du serveur');
         }
 
-        // Déclencher le téléchargement de façon robuste (mobile + desktop compatible)
-        const fullUrl = `${API_BASE_URL}${json.downloadUrl}`;
-        const link = document.createElement('a');
-        link.href = fullUrl;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        link.download = true;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Stocker l'URL de téléchargement et les données
+        downloadUrl = `${API_BASE_URL}${json.downloadUrl}`;
+        generatedFicheData = {
+            filename: json.filename,
+            downloadUrl: downloadUrl
+        };
 
-        // Message adapté selon le navigateur mobile ou desktop
-        const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
-        const message = isMobile
-            ? '📥 Fichier ouvert. Sur iPhone : Partager → Enregistrer dans Fichiers.'
-            : '📥 Fichier Word téléchargé.';
-        showNotification(message, 'success');
+        // Afficher le résultat avec le lien de téléchargement prêt
+        showResult(json);
 
-        // Recharger la page pour vider le formulaire (après le démarrage du téléchargement)
-        setTimeout(() => window.location.reload(), 1200);
+        showNotification('✅ Fiche générée. Cliquez sur le bouton Télécharger.', 'success');
         
     } catch (error) {
         console.error('Erreur:', error);
@@ -1012,46 +1004,25 @@ ficheForm.addEventListener('submit', async (e) => {
     }
 });
 
-// Télécharger le fichier
-downloadLink.addEventListener('click', async (e) => {
+// Télécharger le fichier (clic utilisateur direct)
+downloadLink.addEventListener('click', (e) => {
     e.preventDefault();
-    
-    if (!generatedFicheData) return;
-    
-    try {
-        // Télécharger le fichier Word
-        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.download}/${generatedFicheData.filename}`, {
-            method: 'GET',
-        });
-        
-        if (!response.ok) {
-            throw new Error('Erreur lors du téléchargement');
-        }
-        
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = generatedFicheData.filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-        
-        // Afficher une notification de succès
-        showNotification('Fichier téléchargé avec succès !', 'success');
-        
-    } catch (error) {
-        console.error('Erreur de téléchargement:', error);
-        showError('Erreur lors du téléchargement du fichier');
+
+    if (!downloadUrl) {
+        showError('Aucun fichier disponible');
+        return;
     }
+
+    // Lien direct depuis le clic utilisateur = jamais bloqué par le navigateur
+    downloadLink.href = downloadUrl;
+    downloadLink.click();
 });
 
 // Copier le texte
 btnCopyText.addEventListener('click', () => {
-    if (!generatedFicheData?.content) return;
+    if (!generatedFicheData?.preview) return;
     
-    navigator.clipboard.writeText(generatedFicheData.content)
+    navigator.clipboard.writeText(generatedFicheData.preview)
         .then(() => {
             showNotification('Texte copié dans le presse-papier !', 'success');
         })
@@ -1186,10 +1157,10 @@ function showResult(data) {
     fileSize.textContent = data.filesize ? `~${Math.round(data.filesize/1024)} KB • Document Word` : '~15 KB • Document Word';
     
     // Afficher le contenu
-    generatedPreview.innerHTML = formatContentForDisplay(data.content);
+    generatedPreview.innerHTML = formatContentForDisplay(data.preview || '');
     
-    // Configurer le lien de téléchargement
-    downloadLink.href = `${API_BASE_URL}${API_ENDPOINTS.download}/${data.filename}`;
+    // Configurer le lien de téléchargement (sans le déclencher)
+    downloadLink.href = downloadUrl;
     
     // Afficher le conteneur de résultat
     resultContainer.style.display = 'block';
