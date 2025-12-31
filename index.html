@@ -1006,16 +1006,14 @@ ficheForm.addEventListener('submit', async (e) => {
 
 // Télécharger le fichier (clic utilisateur direct)
 downloadLink.addEventListener('click', (e) => {
-    e.preventDefault();
-
     if (!downloadUrl) {
+        e.preventDefault();
         showError('Aucun fichier disponible');
         return;
     }
 
-    // Lien direct depuis le clic utilisateur = jamais bloqué par le navigateur
-    downloadLink.href = downloadUrl;
-    downloadLink.click();
+    // Laisser le navigateur faire le téléchargement naturellement
+    // Ne pas preventDefault : le lien va faire son travail
 });
 
 // Copier le texte
@@ -1159,8 +1157,9 @@ function showResult(data) {
     // Afficher le contenu
     generatedPreview.innerHTML = formatContentForDisplay(data.preview || '');
     
-    // Configurer le lien de téléchargement (sans le déclencher)
+    // Configurer le lien de téléchargement avec l'URL correcte
     downloadLink.href = downloadUrl;
+    downloadLink.download = data.filename || 'fiche_de_poste.docx';
     
     // Afficher le conteneur de résultat
     resultContainer.style.display = 'block';
