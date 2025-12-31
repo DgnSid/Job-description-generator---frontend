@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧾 Générateur de Fiches de Poste Professionnelles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    /* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #7209b7;
+    --accent: #f72585;
+    --success: #4cc9f0;
+    --warning: #f8961e;
+    --danger: #f94144;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --gray-light: #e9ecef;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    background: white;
+    padding: 15px;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+}
+
+.logo h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ===== FORM CONTAINER ===== */
+.form-container {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    animation: slideUp 0.5s ease-out;
+}
+
+.form-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--gray-light);
+}
+
+.form-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.form-header h2 i {
+    color: var(--primary);
+}
+
+.form-header p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* ===== FORM GRID ===== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.form-group label i {
+    color: var(--primary);
+    width: 20px;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--gray);
+    font-weight: normal;
+    margin-left: auto;
+}
+
+/* ===== INPUT STYLES ===== */
+input, select, textarea {
+    padding: 12px 15px;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--radius-sm);
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1rem;
+    transition: var(--transition);
+    background: white;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* ===== CHECKBOX ===== */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 30px;
+    user-select: none;
+}
+
+.checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border: 2px solid var(--gray-light);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.checkbox:hover .checkmark {
+    border-color: var(--primary);
+}
+
+.checkbox input:checked ~ .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* ===== BUTTONS ===== */
+.form-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--gray-light);
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn i {
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+}
+
+.btn-secondary {
+    background: var(--light);
+    color: var(--dark);
+    border: 2px solid var(--gray-light);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-light);
+    border-color: var(--gray);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-download {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* ===== PREVIEW CONTAINER ===== */
+.preview-container, .result-container {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 2rem;
+    animation: slideUp 0.5s ease-out;
+}
+
+.preview-header, .result-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid var(--gray-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.preview-header h3, .result-header h3 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+}
+
+.btn-close:hover {
+    color: var(--danger);
+}
+
+.preview-content, .result-content {
+    padding: 2rem;
+}
+
+/* ===== RESULT CONTAINER ===== */
+.success-icon {
+    font-size: 3rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: var(--gray);
+    text-align: center;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--gray-light);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 2rem;
+}
+
+.file-icon {
+    font-size: 2.5rem;
+    color: #2B579A; /* Couleur Word */
+}
+
+.file-details h4 {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 5px;
+}
+
+.file-size {
+    color: var(--gray);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.file-path {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--dark);
+    background: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px dashed var(--gray);
+}
+
+.preview-box {
+    background: #f8f9fa;
+    border: 2px dashed var(--gray-light);
+    border-radius: var(--radius-sm);
+    padding: 2rem;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    font-size: 0.95rem;
+}
+
+.preview-box h4 {
+    color: var(--primary);
+    margin: 1rem 0 0.5rem 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.notice {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.notice i {
+    color: #856404;
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.notice p {
+    color: #856404;
+    margin: 0;
+}
+
+/* ===== LOADING CONTAINER ===== */
+.loading-container {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 3rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.loader {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid var(--gray-light);
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 2rem;
+}
+
+.loader h3 {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 1rem;
+    color: var(--dark);
+}
+
+.loader p {
+    color: var(--gray);
+    margin-bottom: 2rem;
+}
+
+.progress {
+    height: 10px;
+    background: var(--gray-light);
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 5px;
+}
+
+.loading-details {
+    font-size: 0.9rem;
+    color: var(--gray);
+    font-style: italic;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--gray-light);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 1rem;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-section p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.footer-section a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-light);
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: white;
+    border-radius: var(--radius);
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-header.error {
+    background: #f8d7da;
+    color: #721c24;
+    border-bottom: 2px solid #f5c6cb;
+}
+
+.modal-header.error i {
+    font-size: 1.5rem;
+}
+
+.modal-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+}
+
+.modal-body {
+    padding: 2rem 1.5rem;
+}
+
+.modal-footer {
+    padding: 1rem 1.5rem;
+    background: var(--gray-light);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-footer {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .file-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .container {
+        padding: 10px;
+    }
+    
+    .form-container, .preview-container, .result-container {
+        padding: 1rem;
+    }
+    
+    .logo {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .form-header h2 {
+        font-size: 1.2rem;
+    }
+    
+    input, select, textarea {
+        padding: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-file-contract"></i>
+                <h1>Générateur de Fiches de Poste</h1>
+            </div>
+            <p class="subtitle">Créez des fiches de poste professionnelles prêtes à publier en quelques minutes</p>
+        </header>
+
+        <!-- Formulaire -->
+        <main class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2><i class="fas fa-edit"></i> Informations du Poste</h2>
+                    <p>Tous les champs marqués d'un * sont obligatoires</p>
+                </div>
+
+                <form id="ficheForm">
+                    <div class="form-grid">
+                        <!-- Colonne 1 -->
+                        <div class="form-column">
+                            <!-- Titre du poste -->
+                            <div class="form-group">
+                                <label for="titre">
+                                    <i class="fas fa-user-tie"></i> Titre du poste *
+                                </label>
+                                <input type="text" id="titre" name="titre" required 
+                                       placeholder="Ex: Commercial, Développeur Web, Chef de Projet...">
+                            </div>
+
+                            <!-- Entreprise -->
+                            <div class="form-group">
+                                <label for="entreprise">
+                                    <i class="fas fa-building"></i> Nom de l'entreprise *
+                                </label>
+                                <input type="text" id="entreprise" name="entreprise" required 
+                                       placeholder="Ex: BABI STORE, TechCorp, StartUp Inc...">
+                            </div>
+
+                            <!-- Secteur -->
+                            <div class="form-group">
+                                <label for="secteur">
+                                    <i class="fas fa-industry"></i> Secteur d'activité *
+                                </label>
+                                <input type="text" id="secteur" name="secteur" required 
+                                       placeholder="Ex: Commerce de détail (mode), IT, Santé...">
+                            </div>
+
+                            <!-- Expérience -->
+                            <div class="form-group">
+                                <label for="experience">
+                                    <i class="fas fa-chart-line"></i> Niveau d'expérience
+                                </label>
+                                <select id="experience" name="experience">
+                                    <option value="">Sélectionnez...</option>
+                                    <option value="Débutant accepté">Débutant accepté</option>
+                                    <option value="1 an minimum">1 an minimum</option>
+                                    <option value="2 ans minimum">2 ans minimum</option>
+                                    <option value="3-5 ans d'expérience">3-5 ans d'expérience</option>
+                                    <option value="5+ ans d'expérience">5+ ans d'expérience</option>
+                                    <option value="Senior (8+ ans)">Senior (8+ ans)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Colonne 2 -->
+                        <div class="form-column">
+                            <!-- Missions -->
+                            <div class="form-group">
+                                <label for="missions">
+                                    <i class="fas fa-tasks"></i> Missions principales *
+                                    <span class="hint">(séparez par des points-virgules)</span>
+                                </label>
+                                <textarea id="missions" name="missions" rows="4" required 
+                                          placeholder="Ex: Vente des articles; Contacter les clients; Proposer des nouveaux modèles..."></textarea>
+                            </div>
+
+                            <!-- Compétences techniques -->
+                            <div class="form-group">
+                                <label for="competences_tech">
+                                    <i class="fas fa-cogs"></i> Compétences techniques requises
+                                    <span class="hint">(séparez par des virgules)</span>
+                                </label>
+                                <textarea id="competences_tech" name="competences_tech" rows="3" 
+                                          placeholder="Ex: Art de la persuasion, Stratégies de communication, Excel avancé..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Colonne 3 -->
+                        <div class="form-column">
+                            <!-- Compétences comportementales -->
+                            <div class="form-group">
+                                <label for="competences_soft">
+                                    <i class="fas fa-users"></i> Compétences comportementales
+                                    <span class="hint">(séparez par des virgules)</span>
+                                </label>
+                                <textarea id="competences_soft" name="competences_soft" rows="3" 
+                                          placeholder="Ex: Écoute attentive, Patience, Esprit d'équipe..."></textarea>
+                            </div>
+
+                            <!-- Avantages -->
+                            <div class="form-group">
+                                <label for="avantages">
+                                    <i class="fas fa-gift"></i> Avantages / Points forts
+                                    <span class="hint">(séparez par des virgules)</span>
+                                </label>
+                                <textarea id="avantages" name="avantages" rows="3" 
+                                          placeholder="Ex: Salaire attractif, Voyages internationaux, Télétravail possible..."></textarea>
+                            </div>
+
+                            <!-- (Options de génération supprimées) -->
+                        </div>
+                    </div>
+
+                    <!-- Boutons -->
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-primary" id="btnGenerate">
+                            <i class="fas fa-magic"></i> Générer la fiche de poste
+                        </button>
+                        <button type="reset" class="btn btn-outline">
+                            <i class="fas fa-redo"></i> Effacer le formulaire
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- (Aperçu rapide supprimé) -->
+
+            <!-- Résultat (fiche générée) -->
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <div class="result-header">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Fiche de Poste Générée avec Succès !</h3>
+                    <p class="success-message">Votre fiche professionnelle est prête à être téléchargée.</p>
+                </div>
+                
+                <div class="result-content">
+                    <div class="file-info">
+                        <div class="file-icon">
+                            <i class="fas fa-file-word"></i>
+                        </div>
+                        <div class="file-details">
+                            <h4 id="fileName">fiche_commercial_2024-01-15.docx</h4>
+                            <p class="file-size" id="fileSize">~15 KB • Document Word</p>
+                            <p class="file-path" id="filePath">/fiches/fiche_commercial_2024-01-15.docx</p>
+                        </div>
+                    </div>
+
+                    <div class="preview-box" id="generatedPreview">
+                        <!-- Le contenu généré sera affiché ici -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <a href="#" class="btn btn-download" id="downloadLink">
+                            <i class="fas fa-download"></i> Télécharger le fichier Word
+                        </a>
+                        <button class="btn btn-secondary" id="btnCopyText">
+                            <i class="fas fa-copy"></i> Copier le texte
+                        </button>
+                        <button class="btn btn-outline" id="btnNewFiche">
+                            <i class="fas fa-plus"></i> Créer une nouvelle fiche
+                        </button>
+                    </div>
+
+                    <div class="notice">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><strong>Note importante :</strong> Cette fiche est générée automatiquement et doit être relue, adaptée et validée par un professionnel RH avant publication.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chargement -->
+            <div class="loading-container" id="loadingContainer" style="display: none;">
+                <div class="loader">
+                    <div class="spinner"></div>
+                    <h3>Génération en cours...</h3>
+                    <p>Création de votre fiche de poste professionnelle</p>
+                    <div class="progress">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p class="loading-details" id="loadingDetails">Analyse des informations...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- (Footer supprimé) -->
+    </div>
+
+    <!-- Modal pour erreurs -->
+    <div class="modal" id="errorModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header error">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Erreur de Génération</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage">Une erreur est survenue lors de la génération de la fiche.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btnCloseError">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Configuration du backend
+const API_BASE_URL = 'http://localhost:3000'; // Changez selon votre configuration
+const API_ENDPOINTS = {
+    generate: '/api/generate-fiche',
+    download: '/api/download-fiche'
+};
+
+// Éléments DOM
+const ficheForm = document.getElementById('ficheForm');
+const btnGenerate = document.getElementById('btnGenerate');
+const resultContainer = document.getElementById('resultContainer');
+const loadingContainer = document.getElementById('loadingContainer');
+const progressBar = document.getElementById('progressBar');
+const loadingDetails = document.getElementById('loadingDetails');
+const errorModal = document.getElementById('errorModal');
+const errorMessage = document.getElementById('errorMessage');
+const btnCloseError = document.getElementById('btnCloseError');
+const modalClose = document.querySelector('.modal-close');
+const generatedPreview = document.getElementById('generatedPreview');
+const downloadLink = document.getElementById('downloadLink');
+const btnCopyText = document.getElementById('btnCopyText');
+const btnNewFiche = document.getElementById('btnNewFiche');
+const fileName = document.getElementById('fileName');
+const filePath = document.getElementById('filePath');
+const fileSize = document.getElementById('fileSize');
+
+// Variables globales
+let generatedFicheData = null;
+
+// (Aperçu rapide supprimé)
+
+// Soumission du formulaire
+ficheForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) return;
+    
+    const formData = getFormData();
+    
+    // Afficher le chargement
+    showLoading();
+    
+    try {
+        // Simulation de progression
+        simulateProgress();
+        
+        // Envoyer les données au backend et récupérer le .docx en binaire
+        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.generate}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            // Essayer de lire un JSON d'erreur
+            let errMsg = `Erreur HTTP: ${response.status}`;
+            try {
+                const errorData = await response.json();
+                errMsg = errorData.error || errMsg;
+            } catch (e) {}
+            throw new Error(errMsg);
+        }
+
+        // Récupérer le blob (.docx)
+        const blob = await response.blob();
+
+        // Déduire le nom de fichier depuis l'en-tête Content-Disposition si disponible
+        let filename = 'fiche_de_poste.docx';
+        const disposition = response.headers.get('content-disposition') || '';
+        const match = /filename="?([^;"\n]+)"?/.exec(disposition);
+        if (match && match[1]) filename = match[1];
+        else {
+            // fallback: construire un nom depuis le titre + timestamp
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace('T','_').split('.')[0];
+            const safeTitre = (formData.titre || 'fiche').toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').substring(0,50);
+            filename = `fiche_${safeTitre}_${timestamp}.docx`;
+        }
+
+        // Téléchargement côté client
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+
+        showNotification('Fichier Word téléchargé.', 'success');
+
+        // Actualiser la page pour vider tous les champs et l'UI
+        setTimeout(() => {
+            window.location.reload();
+        }, 600);
+        
+    } catch (error) {
+        console.error('Erreur:', error);
+        showError(error.message);
+    } finally {
+        hideLoading();
+    }
+});
+
+// Télécharger le fichier
+downloadLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
+    if (!generatedFicheData) return;
+    
+    try {
+        // Télécharger le fichier Word
+        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.download}/${generatedFicheData.filename}`, {
+            method: 'GET',
+        });
+        
+        if (!response.ok) {
+            throw new Error('Erreur lors du téléchargement');
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = generatedFicheData.filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+        
+        // Afficher une notification de succès
+        showNotification('Fichier téléchargé avec succès !', 'success');
+        
+    } catch (error) {
+        console.error('Erreur de téléchargement:', error);
+        showError('Erreur lors du téléchargement du fichier');
+    }
+});
+
+// Copier le texte
+btnCopyText.addEventListener('click', () => {
+    if (!generatedFicheData?.content) return;
+    
+    navigator.clipboard.writeText(generatedFicheData.content)
+        .then(() => {
+            showNotification('Texte copié dans le presse-papier !', 'success');
+        })
+        .catch(err => {
+            console.error('Erreur de copie:', err);
+            showError('Erreur lors de la copie du texte');
+        });
+});
+
+// Nouvelle fiche
+btnNewFiche.addEventListener('click', () => {
+    ficheForm.reset();
+    resultContainer.style.display = 'none';
+    
+    // Scroll vers le haut
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Gestion des erreurs
+btnCloseError.addEventListener('click', () => {
+    errorModal.style.display = 'none';
+});
+
+modalClose.addEventListener('click', () => {
+    errorModal.style.display = 'none';
+});
+
+// Fermer la modal en cliquant en dehors
+window.addEventListener('click', (e) => {
+    if (e.target === errorModal) {
+        errorModal.style.display = 'none';
+    }
+});
+
+// ===== FONCTIONS UTILITAIRES =====
+
+function getFormData() {
+    return {
+        titre: document.getElementById('titre').value,
+        entreprise: document.getElementById('entreprise').value,
+        secteur: document.getElementById('secteur').value,
+        missions: document.getElementById('missions').value,
+        competences_tech: document.getElementById('competences_tech').value,
+        competences_soft: document.getElementById('competences_soft').value,
+        experience: document.getElementById('experience').value,
+        avantages: document.getElementById('avantages').value,
+        // formatWord removed
+    };
+}
+
+function validateForm(quickPreview = false) {
+    const requiredFields = ['titre', 'entreprise', 'secteur', 'missions'];
+    let isValid = true;
+    
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+            isValid = false;
+            highlightError(field);
+        } else {
+            removeHighlight(field);
+        }
+    });
+    
+    if (!isValid && !quickPreview) {
+        showError('Veuillez remplir tous les champs obligatoires (*)');
+    }
+    
+    return isValid;
+}
+
+function highlightError(element) {
+    element.style.borderColor = '#f94144';
+    element.style.boxShadow = '0 0 0 3px rgba(249, 65, 68, 0.1)';
+    
+    // Supprimer le surlignage après 3 secondes
+    setTimeout(() => {
+        removeHighlight(element);
+    }, 3000);
+}
+
+function removeHighlight(element) {
+    element.style.borderColor = '';
+    element.style.boxShadow = '';
+}
+
+// generateQuickPreview removed
+
+function showLoading() {
+    loadingContainer.style.display = 'block';
+    ficheForm.style.opacity = '0.5';
+    ficheForm.style.pointerEvents = 'none';
+    resultContainer.style.display = 'none';
+}
+
+function hideLoading() {
+    loadingContainer.style.display = 'none';
+    ficheForm.style.opacity = '';
+    ficheForm.style.pointerEvents = '';
+}
+
+function simulateProgress() {
+    let progress = 0;
+    const messages = [
+        "Analyse des informations...",
+        "Création de la structure...",
+        "Rédaction du contenu...",
+        "Mise en forme professionnelle...",
+        "Finalisation de la fiche..."
+    ];
+    
+    const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if (progress > 100) progress = 100;
+        
+        progressBar.style.width = `${progress}%`;
+        
+        // Changer le message
+        const messageIndex = Math.min(Math.floor(progress / 20), messages.length - 1);
+        loadingDetails.textContent = messages[messageIndex];
+        
+        if (progress >= 100) {
+            clearInterval(interval);
+        }
+    }, 300);
+}
+
+function showResult(data) {
+    // Mettre à jour les informations du fichier
+    fileName.textContent = data.filename || 'fiche_de_poste.docx';
+    filePath.textContent = data.filepath || '/fiches/generated.docx';
+    fileSize.textContent = data.filesize ? `~${Math.round(data.filesize/1024)} KB • Document Word` : '~15 KB • Document Word';
+    
+    // Afficher le contenu
+    generatedPreview.innerHTML = formatContentForDisplay(data.content);
+    
+    // Configurer le lien de téléchargement
+    downloadLink.href = `${API_BASE_URL}${API_ENDPOINTS.download}/${data.filename}`;
+    
+    // Afficher le conteneur de résultat
+    resultContainer.style.display = 'block';
+    
+    // Scroll vers le résultat
+    resultContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+function formatContentForDisplay(content) {
+    if (!content) return '<p>Aucun contenu généré</p>';
+    
+    // Convertir les sauts de ligne en <br> et formater les titres
+    return content
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n/g, '<br>')
+        .replace(/^# (.+)$/gm, '<h4>$1</h4>')
+        .replace(/^## (.+)$/gm, '<h5>$1</h5>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>');
+}
+
+function showError(message) {
+    errorMessage.textContent = message;
+    errorModal.style.display = 'flex';
+}
+
+function showNotification(message, type = 'info') {
+    // Créer la notification
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+        <button class="notification-close">&times;</button>
+    `;
+    
+    // Styles pour la notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : '#2196F3'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1001;
+        animation: slideInRight 0.3s ease-out;
+    `;
+    
+    // Bouton de fermeture
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
+        setTimeout(() => notification.remove(), 300);
+    });
+    
+    // Ajouter au DOM
+    document.body.appendChild(notification);
+    
+    // Auto-suppression après 5 secondes
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
+    
+    // Ajouter les animations CSS si elles n'existent pas
+    if (!document.querySelector('#notification-styles')) {
+        const style = document.createElement('style');
+        style.id = 'notification-styles';
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            .notification-close {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.2rem;
+                cursor: pointer;
+                margin-left: auto;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier la connexion au backend
+    fetch(`${API_BASE_URL}/api/health`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                console.log('✅ Backend connecté');
+            }
+        })
+        .catch(err => {
+            console.warn('⚠️ Backend non connecté:', err);
+            showNotification('Le backend n\'est pas disponible. Vérifiez que le serveur est en cours d\'exécution.', 'warning');
+        });
+    
+    // Ajouter des tooltips
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach(input => {
+        // Afficher un exemple au focus
+        input.addEventListener('focus', () => {
+            if (input.placeholder) {
+                showNotification(input.placeholder, 'info');
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
