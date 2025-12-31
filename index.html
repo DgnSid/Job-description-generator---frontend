@@ -959,7 +959,7 @@ ficheForm.addEventListener('submit', async (e) => {
         // Simulation de progression
         simulateProgress();
         
-        // Envoyer les données au backend et récupérer le .docx en binaire
+        // Envoyer les données au backend et récupérer l'URL de téléchargement
         const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.generate}`, {
             method: 'POST',
             headers: {
@@ -969,7 +969,6 @@ ficheForm.addEventListener('submit', async (e) => {
         });
 
         if (!response.ok) {
-            // Essayer de lire un JSON d'erreur
             let errMsg = `Erreur HTTP: ${response.status}`;
             try {
                 const errorData = await response.json();
@@ -978,37 +977,17 @@ ficheForm.addEventListener('submit', async (e) => {
             throw new Error(errMsg);
         }
 
-        // Récupérer le blob (.docx)
-        const blob = await response.blob();
+        const json = await response.json();
 
-        // Déduire le nom de fichier depuis l'en-tête Content-Disposition si disponible
-        let filename = 'fiche_de_poste.docx';
-        const disposition = response.headers.get('content-disposition') || '';
-        const match = /filename="?([^;"\n]+)"?/.exec(disposition);
-        if (match && match[1]) filename = match[1];
-        else {
-            // fallback: construire un nom depuis le titre + timestamp
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace('T','_').split('.')[0];
-            const safeTitre = (formData.titre || 'fiche').toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').substring(0,50);
-            filename = `fiche_${safeTitre}_${timestamp}.docx`;
+        if (!json || !json.downloadUrl) {
+            throw new Error('Réponse invalide du serveur');
         }
 
-        // Téléchargement côté client
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
+        // Déclencher le téléchargement via une navigation (le navigateur gère l'attachment)
+        window.location.href = `${API_BASE_URL}${json.downloadUrl}`;
 
-        showNotification('Fichier Word téléchargé.', 'success');
-
-        // Actualiser la page pour vider tous les champs et l'UI
-        setTimeout(() => {
-            window.location.reload();
-        }, 600);
+        // Rechargement léger pour vider le formulaire (après le démarrage du téléchargement)
+        setTimeout(() => window.location.reload(), 800);
         
     } catch (error) {
         console.error('Erreur:', error);
