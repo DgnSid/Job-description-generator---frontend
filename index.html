@@ -724,110 +724,133 @@ textarea {
                 </div>
 
                 <form id="ficheForm">
-                    <div class="form-grid">
-                        <!-- Colonne 1 -->
-                        <div class="form-column">
-                            <!-- Titre du poste -->
+                    <div id="stepper">
+                        <div class="step" data-step="1">
+                            <h3>Bloc 1 — Sélection du poste</h3>
                             <div class="form-group">
-                                <label for="titre">
-                                    <i class="fas fa-user-tie"></i> Titre du poste *
-                                </label>
-                                <input type="text" id="titre" name="titre" required 
-                                       placeholder="Ex: Commercial, Développeur Web, Chef de Projet...">
+                                <label for="titre"><i class="fas fa-user-tie"></i> Intitulé du poste *</label>
+                                <input type="text" id="titre" name="titre" required placeholder="Ex: Chief of Staff">
                             </div>
-
-                            <!-- Entreprise -->
                             <div class="form-group">
-                                <label for="entreprise">
-                                    <i class="fas fa-building"></i> Nom de l'entreprise *
-                                </label>
-                                <input type="text" id="entreprise" name="entreprise" required 
-                                       placeholder="Ex: BABI STORE, TechCorp, StartUp Inc...">
+                                <label for="entreprise"><i class="fas fa-building"></i> Entreprise *</label>
+                                <input type="text" id="entreprise" name="entreprise" required placeholder="Nom de l'entreprise">
                             </div>
+                        </div>
 
-                            <!-- Secteur -->
+                        <div class="step" data-step="2" style="display:none;">
+                            <h3>Bloc 2 — Archétypes du poste</h3>
                             <div class="form-group">
-                                <label for="secteur">
-                                    <i class="fas fa-industry"></i> Secteur d'activité *
-                                </label>
-                                <input type="text" id="secteur" name="secteur" required 
-                                       placeholder="Ex: Commerce de détail (mode), IT, Santé...">
+                                <label for="archetypes">Choix (multi) + ordre libre</label>
+                                <select id="archetypes" multiple size="5">
+                                    <option>CEO Shadow</option>
+                                    <option>Operator / Integrator</option>
+                                    <option>Strategy & Analytics</option>
+                                    <option>PMO / Transformation</option>
+                                    <option>People & Culture</option>
+                                    <option>External & Partnerships</option>
+                                    <option>Special Situations</option>
+                                </select>
+                                <small class="hint">Sélection multiple : Ctrl/Cmd + clic. L'ordre sera pris tel quel.</small>
                             </div>
+                        </div>
 
-                            <!-- Expérience -->
+                        <div class="step" data-step="3" style="display:none;">
+                            <h3>Bloc 3 — Secteurs couverts</h3>
                             <div class="form-group">
-                                <label for="experience">
-                                    <i class="fas fa-chart-line"></i> Niveau d'expérience
-                                </label>
-                                <select id="experience" name="experience">
+                                <label for="secteurs_multi">Secteurs (multi)</label>
+                                <input type="text" id="secteurs_multi" placeholder="Ex: Tech, Energy, Public (séparés par des virgules)">
+                            </div>
+                            <div class="form-group">
+                                <label for="sector_expertise">Bloc 4 — Niveau d'expertise sectorielle</label>
+                                <select id="sector_expertise">
                                     <option value="">Sélectionnez...</option>
-                                    <option value="Débutant accepté">Débutant accepté</option>
-                                    <option value="1 an minimum">1 an minimum</option>
-                                    <option value="2 ans minimum">2 ans minimum</option>
-                                    <option value="3-5 ans d'expérience">3-5 ans d'expérience</option>
-                                    <option value="5+ ans d'expérience">5+ ans d'expérience</option>
-                                    <option value="Senior (8+ ans)">Senior (8+ ans)</option>
+                                    <option>Expert du domaine</option>
+                                    <option>Généraliste structurant</option>
+                                    <option>Curieux très adaptable</option>
                                 </select>
                             </div>
                         </div>
 
-                        <!-- Colonne 2 -->
-                        <div class="form-column">
-                            <!-- Missions -->
+                        <div class="step" data-step="4" style="display:none;">
+                            <h3>Bloc 5 — Missions principales</h3>
                             <div class="form-group">
-                                <label for="missions">
-                                    <i class="fas fa-tasks"></i> Missions principales *
-                                    <span class="hint">(séparez par des points-virgules)</span>
-                                </label>
-                                <textarea id="missions" name="missions" rows="4" required 
-                                          placeholder="Ex: Vente des articles; Contacter les clients; Proposer des nouveaux modèles..."></textarea>
-                            </div>
-
-                            <!-- Compétences techniques -->
-                            <div class="form-group">
-                                <label for="competences_tech">
-                                    <i class="fas fa-cogs"></i> Compétences techniques requises
-                                    <span class="hint">(séparez par des virgules)</span>
-                                </label>
-                                <textarea id="competences_tech" name="competences_tech" rows="3" 
-                                          placeholder="Ex: Art de la persuasion, Stratégies de communication, Excel avancé..."></textarea>
+                                <label for="missions_list">Saisissez missions (séparez par ; )</label>
+                                <textarea id="missions_list" rows="4" placeholder="Ex: Appui direct au CEO; Coordination transverse; Pilotage stratégique..."></textarea>
+                                <small class="hint">Vous pourrez hiérarchiser après génération si besoin.</small>
                             </div>
                         </div>
 
-                        <!-- Colonne 3 -->
-                        <div class="form-column">
-                            <!-- Compétences comportementales -->
+                        <div class="step" data-step="5" style="display:none;">
+                            <h3>Bloc 6 — Niveau d’expérience</h3>
                             <div class="form-group">
-                                <label for="competences_soft">
-                                    <i class="fas fa-users"></i> Compétences comportementales
-                                    <span class="hint">(séparez par des virgules)</span>
-                                </label>
-                                <textarea id="competences_soft" name="competences_soft" rows="3" 
-                                          placeholder="Ex: Écoute attentive, Patience, Esprit d'équipe..."></textarea>
+                                <label for="experience_level">Niveau requis</label>
+                                <select id="experience_level">
+                                    <option>Junior (1–3 ans)</option>
+                                    <option>Early Senior (4–6 ans)</option>
+                                    <option>Senior confirmé (7–10 ans)</option>
+                                    <option>Very Senior / Exécutif (10+ ans)</option>
+                                </select>
                             </div>
-
-                            <!-- Avantages -->
                             <div class="form-group">
-                                <label for="avantages">
-                                    <i class="fas fa-gift"></i> Avantages / Points forts
-                                    <span class="hint">(séparez par des virgules)</span>
-                                </label>
-                                <textarea id="avantages" name="avantages" rows="3" 
-                                          placeholder="Ex: Salaire attractif, Voyages internationaux, Télétravail possible..."></textarea>
+                                <label for="autonomy">Calibration : niveau d'autonomie attendu</label>
+                                <select id="autonomy">
+                                    <option>Exécuter</option>
+                                    <option>Structurer</option>
+                                    <option>Arbitrer</option>
+                                </select>
                             </div>
+                        </div>
 
-                            <!-- (Options de génération supprimées) -->
+                        <div class="step" data-step="6" style="display:none;">
+                            <h3>Bloc 7 — Hard skills + validation par tâches</h3>
+                            <div class="form-group">
+                                <label for="hard_skills">Hard skills (séparés par des virgules)</label>
+                                <input id="hard_skills" placeholder="Ex: SQL, PowerBI, Gestion de projets">
+                            </div>
+                        </div>
+
+                        <div class="step" data-step="7" style="display:none;">
+                            <h3>Bloc 8 — Soft skills + situations</h3>
+                            <div class="form-group">
+                                <label for="soft_skills">Soft skills (séparés par des virgules)</label>
+                                <input id="soft_skills" placeholder="Ex: Leadership, Communication, Résilience">
+                            </div>
+                        </div>
+
+                        <div class="step" data-step="8" style="display:none;">
+                            <h3>Bloc 9 — Avantages & points forts</h3>
+                            <div class="form-group">
+                                <label for="advantages">Avantages (séparés par des virgules)</label>
+                                <input id="advantages" placeholder="Ex: Exposition CEO, Télétravail, Formation">
+                            </div>
+                        </div>
+
+                        <div class="step" data-step="9" style="display:none;">
+                            <h3>Bloc 10 — Indicateurs de succès (6–12 mois)</h3>
+                            <div class="form-group">
+                                <label for="indicators">Indicateurs clés (séparés par des virgules)</label>
+                                <input id="indicators" placeholder="Ex: Réduction des coûts, Lancement du produit X">
+                            </div>
+                        </div>
+
+                        <div class="step" data-step="10" style="display:none;">
+                            <h3>Bloc 11 — Génération préliminaire</h3>
+                            <p>Revoyez vos choix, puis cliquez sur Générer pour créer la fiche préliminaire.</p>
+                        </div>
+
+                        <div class="step" data-step="11" style="display:none;">
+                            <h3>Résumé & Validation</h3>
+                            <div id="reviewBox" class="preview-box">Aucun récapitulatif pour l'instant.</div>
                         </div>
                     </div>
 
-                    <!-- Boutons -->
                     <div class="form-footer">
-                        <button type="submit" class="btn btn-primary" id="btnGenerate">
+                        <button type="button" class="btn btn-secondary" id="btnPrev">Précédent</button>
+                        <button type="button" class="btn btn-primary" id="btnNext">Suivant</button>
+                        <button type="submit" class="btn btn-primary" id="btnGenerate" style="display:none;">
                             <i class="fas fa-magic"></i> Générer la fiche de poste
                         </button>
-                        <button type="reset" class="btn btn-outline">
-                            <i class="fas fa-redo"></i> Effacer le formulaire
-                        </button>
+                        <button type="reset" class="btn btn-outline" id="btnReset">Effacer</button>
                     </div>
                 </form>
             </div>
@@ -860,7 +883,7 @@ textarea {
                     </div>
 
                     <div class="action-buttons">
-                        <a href="#" class="btn btn-download" id="downloadLink" target="_blank" rel="noopener">
+                        <a href="#" class="btn btn-download" id="downloadLink">
                             <i class="fas fa-download"></i> Télécharger le fichier Word
                         </a>
                         <p style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem; text-align: center;">
@@ -913,8 +936,8 @@ textarea {
     </div>
 
 <script>
-// Configuration du backend
-const API_BASE_URL = 'https://job-generation-description-backend.onrender.com'; // Changez selon votre configuration
+// Configuration du backend (mode local pour tests)
+const API_BASE_URL = 'https://job-generation-description-backend.onrender.com'; // Utiliser l'API locale
 const API_ENDPOINTS = {
     generate: '/api/generate-fiche',
     download: '/api/download-fiche'
@@ -980,15 +1003,14 @@ ficheForm.addEventListener('submit', async (e) => {
 
         const json = await response.json();
 
-        if (!json || !json.downloadUrl) {
-            throw new Error('Réponse invalide du serveur');
+        if (!json || !json.fileData) {
+            throw new Error('Réponse invalide du serveur: pas de données de fichier');
         }
 
-        // Stocker l'URL de téléchargement et les données
-        downloadUrl = `${API_BASE_URL}${json.downloadUrl}`;
+        // Stocker les données du fichier
         generatedFicheData = {
             filename: json.filename,
-            downloadUrl: downloadUrl
+            fileData: json.fileData  // Données en base64 pour téléchargement direct
         };
 
         // Afficher le résultat avec le lien de téléchargement prêt
@@ -1006,29 +1028,67 @@ ficheForm.addEventListener('submit', async (e) => {
 
 // Télécharger le fichier (clic utilisateur direct)
 downloadLink.addEventListener('click', (e) => {
-    if (!downloadUrl) {
-        e.preventDefault();
-        showError('Aucun fichier disponible');
+    e.preventDefault();
+    
+    console.log('🔍 Tentative de téléchargement...');
+    console.log('fileData disponible:', !!generatedFicheData?.fileData);
+    console.log('filename:', generatedFicheData?.filename);
+    
+    if (!generatedFicheData?.fileData) {
+        console.error('❌ Pas de données de fichier');
+        showError('Aucun fichier disponible. Veuillez régénérer la fiche.');
         return;
     }
 
-    // Laisser le navigateur faire le téléchargement naturellement
-    // Ne pas preventDefault : le lien va faire son travail
+    try {
+        // Convertir base64 en blob
+        const binaryString = atob(generatedFicheData.fileData);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        const blob = new Blob([bytes], { 
+            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+        });
+        
+        console.log('✅ Blob créé, taille:', blob.size, 'bytes');
+        
+        // Créer une URL temporaire et télécharger
+        const blobUrl = URL.createObjectURL(blob);
+        const tempLink = document.createElement('a');
+        tempLink.href = blobUrl;
+        tempLink.download = generatedFicheData?.filename || 'fiche_de_poste.docx';
+        
+        console.log('📥 Téléchargement de:', tempLink.download);
+        
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        
+        // Libérer la ressource après un délai
+        setTimeout(() => {
+            URL.revokeObjectURL(blobUrl);
+        }, 100);
+        
+        showNotification('✅ Téléchargement lancé! Vérifiez votre dossier Téléchargements.', 'success');
+    } catch (error) {
+        console.error('❌ Erreur lors du téléchargement:', error);
+        showError('Erreur lors du téléchargement: ' + error.message);
+    }
 });
 
-// Copier le texte
-btnCopyText.addEventListener('click', () => {
-    if (!generatedFicheData?.preview) return;
-    
-    navigator.clipboard.writeText(generatedFicheData.preview)
-        .then(() => {
-            showNotification('Texte copié dans le presse-papier !', 'success');
-        })
-        .catch(err => {
-            console.error('Erreur de copie:', err);
-            showError('Erreur lors de la copie du texte');
-        });
-});
+// Copier le texte (si le bouton existe)
+if (typeof btnCopyText !== 'undefined' && btnCopyText) {
+    btnCopyText.addEventListener('click', () => {
+        if (!generatedFicheData?.preview) return;
+        navigator.clipboard.writeText(generatedFicheData.preview)
+            .then(() => showNotification('Texte copié dans le presse-papier !', 'success'))
+            .catch(err => {
+                console.error('Erreur de copie:', err);
+                showError('Erreur lors de la copie du texte');
+            });
+    });
+}
 
 // Nouvelle fiche
 btnNewFiche.addEventListener('click', () => {
@@ -1058,37 +1118,59 @@ window.addEventListener('click', (e) => {
 // ===== FONCTIONS UTILITAIRES =====
 
 function getFormData() {
+    // Récupère les champs du workflow multi-étapes
+    const titre = (document.getElementById('titre') || {}).value || '';
+    const entreprise = (document.getElementById('entreprise') || {}).value || '';
+    const secteurs_multi = (document.getElementById('secteurs_multi') || {}).value || '';
+    const sector_expertise = (document.getElementById('sector_expertise') || {}).value || '';
+    const archetypesSelect = document.getElementById('archetypes');
+    const archetypes = archetypesSelect ? Array.from(archetypesSelect.selectedOptions).map(o => o.value).join(', ') : '';
+    const missions = (document.getElementById('missions_list') || {}).value || '';
+    const hard_skills = (document.getElementById('hard_skills') || {}).value || '';
+    const soft_skills = (document.getElementById('soft_skills') || {}).value || '';
+    const advantages = (document.getElementById('advantages') || {}).value || '';
+    const indicators = (document.getElementById('indicators') || {}).value || '';
+    const experience_level = (document.getElementById('experience_level') || {}).value || '';
+    const autonomy = (document.getElementById('autonomy') || {}).value || '';
+
+    // Construire un champ secteur simple pour compatibilité serveur
+    const secteur = secteurs_multi.split(',').map(s => s.trim()).filter(Boolean).join(', ');
+
     return {
-        titre: document.getElementById('titre').value,
-        entreprise: document.getElementById('entreprise').value,
-        secteur: document.getElementById('secteur').value,
-        missions: document.getElementById('missions').value,
-        competences_tech: document.getElementById('competences_tech').value,
-        competences_soft: document.getElementById('competences_soft').value,
-        experience: document.getElementById('experience').value,
-        avantages: document.getElementById('avantages').value,
-        // formatWord removed
+        titre,
+        entreprise,
+        secteur,
+        missions,
+        competences_tech: hard_skills,
+        competences_soft: soft_skills,
+        experience: experience_level || autonomy,
+        avantages: advantages,
+        archetypes,
+        sector_expertise,
+        indicators
     };
 }
 
 function validateForm(quickPreview = false) {
-    const requiredFields = ['titre', 'entreprise', 'secteur', 'missions'];
+    // Champs obligatoires adaptés au nouveau workflow
+    const requiredFields = ['titre', 'entreprise', 'missions_list'];
     let isValid = true;
-    
+
     requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
+        // Si l'élément n'existe pas, on le considère comme manquant mais on évite les erreurs JS
+        if (!field || !field.value || !field.value.trim()) {
             isValid = false;
-            highlightError(field);
+            if (field) highlightError(field);
         } else {
             removeHighlight(field);
         }
     });
-    
+
     if (!isValid && !quickPreview) {
         showError('Veuillez remplir tous les champs obligatoires (*)');
     }
-    
+
     return isValid;
 }
 
@@ -1151,21 +1233,32 @@ function simulateProgress() {
 function showResult(data) {
     // Mettre à jour les informations du fichier
     fileName.textContent = data.filename || 'fiche_de_poste.docx';
-    filePath.textContent = data.filepath || '/fiches/generated.docx';
     fileSize.textContent = data.filesize ? `~${Math.round(data.filesize/1024)} KB • Document Word` : '~15 KB • Document Word';
+    
+    // Masquer le chemin du fichier disque (pas de sauvegarde)
+    const filePathElement = document.getElementById('filePath');
+    if (filePathElement) {
+        filePathElement.style.display = 'none';
+    }
     
     // Afficher le contenu
     generatedPreview.innerHTML = formatContentForDisplay(data.preview || '');
     
-    // Configurer le lien de téléchargement avec l'URL correcte
-    downloadLink.href = downloadUrl;
-    downloadLink.download = data.filename || 'fiche_de_poste.docx';
+    // S'assurer que le bouton est bien visible et activé
+    if (downloadLink) {
+        downloadLink.style.display = 'inline-flex';
+        downloadLink.style.pointerEvents = 'auto';
+        downloadLink.style.opacity = '1';
+        downloadLink.style.cursor = 'pointer';
+    }
     
     // Afficher le conteneur de résultat
     resultContainer.style.display = 'block';
     
     // Scroll vers le résultat
-    resultContainer.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => {
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
 }
 
 function formatContentForDisplay(content) {
@@ -1282,6 +1375,69 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // --- Stepper (navigation multi-étapes) ---
+    const totalSteps = 11;
+    let currentStep = 1;
+    const btnNext = document.getElementById('btnNext');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnGenerateLocal = document.getElementById('btnGenerate');
+    const btnResetLocal = document.getElementById('btnReset');
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(el => el.style.display = 'none');
+        const el = document.querySelector(`.step[data-step='${n}']`);
+        if (el) el.style.display = 'block';
+        // Afficher ou masquer les boutons
+        btnPrev.style.display = n === 1 ? 'none' : 'inline-flex';
+        btnNext.style.display = n === totalSteps ? 'none' : 'inline-flex';
+        btnGenerateLocal.style.display = n === totalSteps - 1 || n === totalSteps ? 'inline-flex' : 'none';
+        // Mettre à jour le résumé si on est sur la dernière étape
+        if (n === totalSteps) updateReview();
+    }
+
+    function updateReview() {
+        const reviewBox = document.getElementById('reviewBox');
+        if (!reviewBox) return;
+        const data = getFormData();
+        const lines = [];
+        lines.push(`<strong>Titre :</strong> ${data.titre}`);
+        lines.push(`<strong>Entreprise :</strong> ${data.entreprise}`);
+        lines.push(`<strong>Archétypes :</strong> ${data.archetypes || ''}`);
+        lines.push(`<strong>Secteurs :</strong> ${data.secteur || ''}`);
+        lines.push(`<strong>Niveau expertise :</strong> ${data.sector_expertise || ''}`);
+        lines.push(`<strong>Expérience :</strong> ${data.experience || ''}`);
+        lines.push(`<strong>Missions :</strong><br>${(data.missions || '').replace(/;\s*/g, '<br>')}`);
+        lines.push(`<strong>Hard skills :</strong> ${data.competences_tech || ''}`);
+        lines.push(`<strong>Soft skills :</strong> ${data.competences_soft || ''}`);
+        lines.push(`<strong>Avantages :</strong> ${data.avantages || ''}`);
+        lines.push(`<strong>Indicateurs :</strong> ${data.indicators || ''}`);
+        reviewBox.innerHTML = `<p>${lines.join('</p><p>')}</p>`;
+    }
+
+    if (btnNext) btnNext.addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+            currentStep += 1;
+            showStep(currentStep);
+        }
+    });
+
+    if (btnPrev) btnPrev.addEventListener('click', () => {
+        if (currentStep > 1) {
+            currentStep -= 1;
+            showStep(currentStep);
+        }
+    });
+
+    if (btnResetLocal) btnResetLocal.addEventListener('click', () => {
+        // reset and go back to first step
+        document.getElementById('ficheForm').reset();
+        currentStep = 1;
+        showStep(currentStep);
+    });
+
+    // Initialiser
+    showStep(currentStep);
 });
 </script>
 </body>
